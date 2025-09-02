@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://Eddglitch.github.io/PortImpl",
-  "scripts": {
+ "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && touch \n./out/.nojekyll && git add -f out/ && git commit -m 'Deploy' && git subtree push --prefix out origin gh-pages"
+    "deploy": "npm run build && touch ./out/.nojekyll && git add -f out/ && git commit -m 'Deploy' && git subtree push --prefix out origin gh-pages"
   },
   "dependencies": {
     "lucide-react": "^0.525.0",
