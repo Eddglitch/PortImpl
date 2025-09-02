@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -18,7 +19,7 @@ export default function RootLayout({
     // Lógica de Smooth Scroll y Fade-in
     document.documentElement.style.scrollBehavior = 'auto';
     let targetScrollY = window.scrollY;
-    let animationFrameId: number | null = null;
+    let animationFrameID: number | null = null;
 
     const animateScroll = () => {
       const currentScrollY = window.scrollY;
@@ -27,12 +28,12 @@ export default function RootLayout({
 
       if (Math.abs(distance) > 1) {
         window.scrollTo(0, currentScrollY + scrollStep);
-        animationFrameId = requestAnimationFrame(animateScroll);
+        animationFrameID = requestAnimationFrame(animateScroll);
       } else {
         window.scrollTo(0, targetScrollY);
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = null;
+        if (animationFrameID) {
+          cancelAnimationFrame(animationFrameID);
+          animationFrameID = null;
         }
       }
     };
@@ -41,8 +42,8 @@ export default function RootLayout({
       e.preventDefault();
       targetScrollY += e.deltaY * 0.5;
       targetScrollY = Math.max(0, Math.min(targetScrollY, document.body.scrollHeight - window.innerHeight));
-      if (!animationFrameId) {
-        animationFrameId = requestAnimationFrame(animateScroll);
+      if (!animationFrameID) {
+        animationFrameID = requestAnimationFrame(animateScroll);
       }
     };
 
@@ -54,59 +55,138 @@ export default function RootLayout({
         if (targetElement) {
           // @ts-ignore
           targetScrollY = targetElement.offsetTop;
-          if (!animationFrameId) {
-            animationFrameId = requestAnimationFrame(animateScroll);
+          if (!animationFrameID) {
+            animationFrameID = requestAnimationFrame(animateScroll);
           }
         }
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
-    document.addEventListener('click', handleAnchorClick, true); // Use capture phase
+    document.addEventListener('click', handleAnchorClick);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+    // Lógica para el cursor personalizado
+    const customCursor = document.querySelector('.custom-cursor') as HTMLElement;
+    if (customCursor) {
+      const handleMouseMove = (e: MouseEvent) => {
+        customCursor.style.left = `${e.clientX}px`;
+        customCursor.style.top = `${e.clientY}px`;
+      };
+
+      const handleMouseEnter = () => customCursor.classList.add('hover');
+      const handleMouseLeave = () => customCursor.classList.remove('hover');
+
+      document.addEventListener('mousemove', handleMouseMove);
+
+      // Añadir eventos a elementos interactivos
+      const interactiveElements = document.querySelectorAll('a, button, .skill-item, .project-card, .theme-toggle, .scroll-to-top, .hamburger-menu');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', handleMouseEnter);
+        el.addEventListener('mouseleave', handleMouseLeave);
+      });
+
+      // Cleanup para cursor personalizado
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        interactiveElements.forEach(el => {
+          el.removeEventListener('mouseenter', handleMouseEnter);
+          el.removeEventListener('mouseleave', handleMouseLeave);
         });
-      },
-      { threshold: 0.1 }
-    );
+      };
+    }
 
-    const elements = document.querySelectorAll('.fade-in');
-    elements.forEach((el) => observer.observe(el));
-    
-    // La lógica del menú de hamburguesa ha sido eliminada de aquí y movida a Header.tsx
+    // Lógica para el botón de scroll-to-top
+    const scrollToTopButton = document.querySelector('.scroll-to-top') as HTMLElement;
+    if (scrollToTopButton) {
+      const handleScroll = () => {
+        if (window.scrollY > 200) {
+          scrollToTopButton.classList.add('visible');
+        } else {
+          scrollToTopButton.classList.remove('visible');
+        }
+      };
 
+      const handleScrollToTopClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      scrollToTopButton.addEventListener('click', handleScrollToTopClick);
+
+      // Cleanup para scroll-to-top
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        scrollToTopButton.removeEventListener('click', handleScrollToTopClick);
+      };
+    }
+
+    // Lógica para el tema (claro/oscuro)
+    const themeToggle = document.querySelector('.theme-toggle') as HTMLElement;
+    if (themeToggle) {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      document.body.setAttribute('data-theme', currentTheme);
+
+      const handleThemeToggle = () => {
+        const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      };
+
+      themeToggle.addEventListener('click', handleThemeToggle);
+
+      // Cleanup para theme toggle
+      return () => {
+        themeToggle.removeEventListener('click', handleThemeToggle);
+      };
+    }
+
+    // Lógica para animaciones fade-in al hacer scroll
+    const fadeInElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('appear');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    fadeInElements.forEach(el => {
+      observer.observe(el);
+    });
+
+    // Cleanup principal
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('click', handleAnchorClick, true);
-      elements.forEach((el) => observer.unobserve(el));
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      document.removeEventListener('click', handleAnchorClick);
+      observer.disconnect();
     };
   }, []);
 
   return (
     <html lang="es">
       <head>
-        <title>Eduardo Téllez - Visualización de Datos & Música</title>
-        <meta name="description" content="Portafolio de Eduardo Téllez, especialista en visualización de datos y músico." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" />
+        <meta name="description" content="Eduardo Téllez - Especialista en visualización de datos y creación de contenido gráfico" />
+        <title>Eduardo Téllez - Visualización de Datos & Música</title>
       </head>
-      <body className={inter.className} data-theme="dark">
+      <body className={inter.className}>
         <CustomCursor />
         <ThemeToggle />
         <Header />
-        <main>{children}</main>
+        <main>
+          {children}
+        </main>
         <Footer />
+        
+        {/* Botón de scroll to top */}
+        <button className="scroll-to-top" aria-label="Volver arriba">
+          ↑
+        </button>
       </body>
     </html>
   );
 }
+

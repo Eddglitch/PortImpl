@@ -197,7 +197,7 @@ p {
 }
 
 body[data-theme="light"] .theme-toggle-icon {
-  background-image: url('/images/sun-icon.svg');
+  background-image: url('/images/sun-icon.svg'); /* Asegúrate de tener estos iconos */
 }
 
 body[data-theme="dark"] .theme-toggle-icon {
@@ -232,7 +232,7 @@ body[data-theme="dark"] .theme-toggle-icon {
 .hero-content {
   z-index: 1;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para el texto */
   border-radius: 10px;
 }
 
@@ -269,7 +269,7 @@ body[data-theme="dark"] .theme-toggle-icon {
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 1.5rem auto; /* Centrar imagen */
   border: 4px solid var(--color-accent-primary);
 }
 
@@ -368,31 +368,6 @@ body[data-theme="dark"] .theme-toggle-icon {
   background: var(--color-accent-secondary);
 }
 
-/* Contact Section */
-.contact-section {
-  padding: 4rem 0;
-  background: var(--color-bg-tertiary);
-  color: var(--color-text-primary);
-  text-align: center;
-}
-
-.contact-section p {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-}
-
-.contact-links a {
-  display: inline-block;
-  font-size: 1.2rem;
-  color: var(--color-accent-primary);
-  margin: 0 1rem;
-  transition: color var(--transition-fast);
-}
-
-.contact-links a:hover {
-  color: var(--color-accent-secondary);
-}
-
 /* Footer */
 .footer {
   background: var(--color-bg-primary);
@@ -489,9 +464,9 @@ body[data-theme="dark"] .theme-toggle-icon {
   background: var(--color-accent-secondary);
 }
 
-/* --- NAVBAR Y RESPONSIVE DESIGN CORREGIDO --- */
+/* --- Responsive Design --- */
 
-/* Navbar - Estilos base para escritorio */
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -510,13 +485,9 @@ body[data-theme="dark"] .theme-toggle-icon {
   color: var(--color-accent-primary);
 }
 
-/* Enlaces de navegación para escritorio */
 .navbar .nav-links {
   display: flex;
   gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .navbar .nav-links li {
@@ -527,105 +498,59 @@ body[data-theme="dark"] .theme-toggle-icon {
   font-size: 1.1rem;
   font-weight: 500;
   transition: color var(--transition-fast);
-  text-decoration: none;
 }
 
 .navbar .nav-links a:hover {
   color: var(--color-accent-primary);
 }
 
-/* Hamburger Menu - Oculto por defecto en escritorio */
+/* Hamburger Menu (Hidden by default on desktop) */
 .hamburger-menu {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0.5rem;
 }
 
 .hamburger-menu .bar {
   width: 25px;
   height: 3px;
   background-color: var(--color-text-primary);
-  margin: 3px 0;
+  margin: 4px 0;
   transition: all 0.3s ease-in-out;
-  border-radius: 2px;
 }
 
-/* Mobile Navigation - Oculto por defecto */
+/* Mobile Navigation (Hidden by default) */
 .mobile-nav {
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 100%;
+  top: 60px; /* Adjust based on navbar height */
   left: 0;
   width: 100%;
   background: var(--color-bg-secondary);
   box-shadow: var(--shadow-md);
   padding: 1rem 0;
   z-index: 999;
-  list-style: none;
-  margin: 0;
+}
+
+.mobile-nav.active {
+  display: flex;
 }
 
 .mobile-nav li {
   list-style: none;
   text-align: center;
   padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-secondary);
-}
-
-.mobile-nav li:last-child {
-  border-bottom: none;
 }
 
 .mobile-nav a {
   font-size: 1.2rem;
   color: var(--color-text-primary);
-  text-decoration: none;
-  display: block;
-  padding: 0.5rem 1rem;
-  transition: color var(--transition-fast);
 }
 
-.mobile-nav a:hover {
-  color: var(--color-accent-primary);
-}
-
-/* Estado activo del menú móvil */
-.mobile-nav.active {
-  display: flex;
-}
-
-/* --- MEDIA QUERIES CORREGIDAS --- */
-
-/* Tablet y pantallas medianas */
-@media (max-width: 1024px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-  
-  h1 {
-    font-size: 3rem;
-  }
-  
-  h2 {
-    font-size: 2.2rem;
-  }
-  
-  .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  }
-  
-  .projects-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-}
-
-/* Móviles y pantallas pequeñas */
+/* Media Queries */
 @media (max-width: 768px) {
-  /* Ajustes generales para pantallas pequeñas */
+  /* General adjustments for smaller screens */
   h1 {
     font-size: 2.8rem;
   }
@@ -639,10 +564,6 @@ body[data-theme="dark"] .theme-toggle-icon {
   }
 
   /* Hero Section */
-  .hero-content {
-    padding: 1.5rem;
-  }
-  
   .hero-content h1 {
     font-size: 3rem;
   }
@@ -664,13 +585,11 @@ body[data-theme="dark"] .theme-toggle-icon {
 
   .skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 0.75rem;
   }
 
   /* Projects Section */
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
 
   /* Contact Section */
@@ -679,24 +598,24 @@ body[data-theme="dark"] .theme-toggle-icon {
     margin: 0 0.5rem;
   }
 
-  /* --- NAVBAR RESPONSIVE --- */
-  
-  /* Ocultar enlaces de navegación normales en móvil */
+  /* Navbar adjustments for mobile */
   .navbar .nav-links {
-    display: none !important;
+    display: none; /* Hide desktop nav links */
   }
 
-  /* Mostrar menú hamburguesa en móvil */
   .hamburger-menu {
-    display: flex !important;
+    display: flex; /* Show hamburger menu */
   }
 
-  /* Ajustar padding del navbar en móvil */
-  .navbar {
-    padding: 1rem;
+  .mobile-nav {
+    display: none; /* Hidden by default, controlled by JS */
   }
 
-  /* Theme Toggle y Scroll to Top - Ajuste de posición */
+  .mobile-nav.active {
+    display: flex; /* Show when active */
+  }
+
+  /* Theme Toggle and Scroll to Top button position adjustment */
   .theme-toggle,
   .scroll-to-top {
     bottom: 1rem;
@@ -704,8 +623,8 @@ body[data-theme="dark"] .theme-toggle-icon {
   }
 }
 
-/* Móviles muy pequeños */
 @media (max-width: 480px) {
+  /* Further adjustments for very small mobile screens */
   h1 {
     font-size: 2.2rem;
   }
@@ -747,19 +666,9 @@ body[data-theme="dark"] .theme-toggle-icon {
   .contact-section p {
     font-size: 1rem;
   }
-  
-  .navbar {
-    padding: 0.75rem;
-  }
-  
-  .navbar .logo {
-    font-size: 1.5rem;
-  }
 }
 
-/* --- ANIMACIONES DEL MENÚ HAMBURGUESA --- */
-
-/* Animación del menú móvil */
+/* Animations for mobile nav */
 .mobile-nav {
   transform: translateY(-100%);
   transition: transform var(--transition-normal) ease-out;
@@ -769,7 +678,7 @@ body[data-theme="dark"] .theme-toggle-icon {
   transform: translateY(0);
 }
 
-/* Animación de las barras del hamburguesa */
+/* Hamburger animation */
 .hamburger-menu.active .bar:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -782,23 +691,373 @@ body[data-theme="dark"] .theme-toggle-icon {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Prevenir scroll cuando el modal está abierto */
+/* Ensure body doesn't scroll when modal is open */
 body.modal-open {
   overflow: hidden;
-}
-
-/* Asegurar que no hay conflictos de especificidad */
-nav .nav-links {
-  display: flex;
-}
-
-@media (max-width: 768px) {
-  nav .nav-links {
-    display: none !important;
-  }
+}  
+/* Appended styles for Hero component elements */  
+.hero-section .hero-main-title {  
+  font-size: 4.5rem;  
+  font-weight: 700;  
+  margin-bottom: 1rem;  
+}  
   
-  nav .hamburger-menu {
-    display: flex !important;
-  }
+.hero-section .hero-subtitle {  
+  font-size: 1.5rem;  
+  font-weight: 400;  
+  margin-bottom: 1.5rem;  
+  color: var(--color-text-secondary);  
+}  
+  
+.hero-section .description {  
+  font-size: 1.1rem;  
+  max-width: 600px;  
+  margin: 0 auto 2rem auto;  
+  color: var(--color-text-tertiary);  
+}  
+  
+.cta-button {  
+  display: inline-block;  
+  background: var(--color-accent-primary);  
+  color: white;  
+  padding: 0.8rem 2rem;  
+  border-radius: 50px;  
+  text-decoration: none;  
+  font-weight: 600;  
+  transition: background 0.2s ease, transform 0.2s ease;  
+  z-index: 1;  
+  position: relative;  
+}  
+  
+.cta-button:hover {  
+  background: var(--color-accent-secondary);  
+  transform: translateY(-3px);  
+}  
+  
+.video-overlay {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background-color: rgba(0, 0, 0, 0.4);  
+  z-index: 0;  
+}  
+  
+/* Appended styles for About section */  
+.about-section {  
+  position: relative;  
+  overflow: hidden;  
+}  
+  
+.about-section::before {  
+  content: '';  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background-image: url('/Portfolio/Edd.png');  
+  background-size: contain;  
+  background-repeat: no-repeat;  
+  background-position: center right;  
+  opacity: 0.1;  
+  filter: blur(2px);  
+  z-index: -1;  
+  transition: opacity 0.8s ease-out, filter 0.8s ease-out;  
+}  
+  
+.about-content {  
+  display: grid;  
+  grid-template-columns: 1fr 1fr;  
+  gap: 60px;  
+  align-items: center;  
+}  
+  
+.skill-item {  
+  cursor: pointer;  
+}  
+  
+.skill-item:hover {  
+  border-color: var(--color-accent-secondary);  
+  box-shadow: var(--shadow-lg);  
+  transform: translateY(-5px) scale(1.03);  
+}  
+  
+.showcase-overlay {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background: rgba(0, 0, 0, 0.85);  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  z-index: 9999;  
+} 
+  
+/* Appended styles for common Section Title */  
+.section-title {  
+  font-size: 2.8rem;  
+  font-weight: 600;  
+  text-align: center;  
+  margin-bottom: 3rem;  
+  color: var(--color-text-primary);  
+}  
+  
+/* Appended styles for Projects section */  
+.project-card .project-image {  
+  font-size: 4rem; /* For emoji */  
+  line-height: 1;  
+  padding: 2rem;  
+  text-align: center;  
+  background: var(--color-bg-tertiary);  
+  cursor: pointer;  
+  transition: background 0.3s ease;  
+}  
+  
+.project-card:hover .project-image {  
+  background: var(--color-accent-primary);  
+}  
+  
+.project-card .project-content {  
+  padding: 1.5rem;  
+}  
+  
+.project-card .project-title {  
+  font-size: 1.5rem;  
+  margin-bottom: 0.75rem;  
+  color: var(--color-text-primary);  
+}  
+  
+.project-card .project-description {  
+  font-size: 1rem;  
+  color: var(--color-text-secondary);  
+  margin-bottom: 1rem;  
+  min-height: 60px; /* Give a consistent height */  
+}  
+  
+.project-card .project-tags {  
+  display: flex;  
+  flex-wrap: wrap;  
+  gap: 0.5rem;  
+  margin-bottom: 1.5rem;  
+}  
+  
+.project-card .tag {  
+  background: var(--color-bg-tertiary);  
+  color: var(--color-text-muted);  
+  padding: 0.25rem 0.75rem;  
+  border-radius: 15px;  
+  font-size: 0.8rem;  
+  font-weight: 500;  
+}  
+  
+.project-card .project-link {  
+  color: var(--color-accent-primary);  
+  font-weight: 600;  
+  text-decoration: none;  
+  margin-right: 1rem;  
+  transition: color 0.2s ease;  
+}  
+  
+.project-card .project-link:hover {  
+  color: var(--color-accent-secondary);  
+} 
+  
+/* Appended styles for Interests section */  
+.interests {  
+  position: relative;  
+  padding: 4rem 0;  
+  color: var(--color-text-primary);  
+  text-align: center;  
+}  
+  
+.interests .video-container {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  z-index: -2;  
+  overflow: hidden;  
+}  
+  
+.interests #interestsVideo {  
+  width: 100%;  
+  height: 100%;  
+  object-fit: cover;  
+}  
+  
+.interests .interests-content {  
+  position: relative;  
+  z-index: 1;  
+  padding: 2rem;  
+  background: rgba(0, 0, 0, 0.6);  
+  border-radius: 10px;  
+}  
+  
+.interests-grid {  
+  display: grid;  
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+  gap: 2rem;  
+  margin-top: 3rem;  
+  text-align: left;  
+}  
+  
+.interest-item {  
+  background: var(--color-bg-secondary);  
+  padding: 1.5rem;  
+  border-radius: 10px;  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  
+}  
+  
+.interest-item:hover {  
+  transform: translateY(-5px);  
+  box-shadow: var(--shadow-lg);  
+}  
+  
+.interest-icon {  
+  font-size: 2.5rem;  
+  display: block;  
+  margin-bottom: 1rem;  
+}  
+  
+.interest-title {  
+  font-size: 1.5rem;  
+  margin-bottom: 0.5rem;  
+  color: var(--color-text-primary);  
+}  
+  
+.interest-description {  
+  font-size: 1rem;  
+  color: var(--color-text-secondary);  
+} 
+
+/* Appended styles for Music section */
+.music-intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
 }
 
+.bands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.band-card {
+  background: var(--color-bg-secondary);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.band-name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+}
+
+.band-role {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.band-description {
+  color: var(--color-text-secondary);
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.band-media {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.media-placeholder {
+  flex: 1;
+  padding: 1rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.media-placeholder:hover {
+  background: var(--color-accent-primary);
+}
+
+.band-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.band-link {
+  color: var(--color-accent-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.band-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+.social-media-group {
+  position: relative;
+}
+
+.social-media-dropdown {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+}
+
+.social-media-group:hover .social-media-dropdown {
+  display: block;
+}
+
+.social-media-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--color-text-secondary);
+}
+
+.social-media-item:hover {
+  background: var(--color-accent-primary);
+  color: white;
+}
+
+.spotify-section {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-primary);
+}
+
+.spotify-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.spotify-player {
+  max-width: 800px;
+  margin: 0 auto;
+}

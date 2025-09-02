@@ -1,70 +1,89 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  // Función para alternar el menú móvil
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleLinkClick = () => {
-    setIsMenuOpen(false);
+  // Función para cerrar el menú móvil cuando se hace clic en un enlace
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
+
+  // Cerrar el menú móvil cuando se redimensiona la ventana a escritorio
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Prevenir scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <header>
       <nav className="navbar">
-        <div className="logo">
-          <a href="#inicio" onClick={handleLinkClick}>
-            <Image 
-              src={`${basePath}/logeed.png`} 
-              alt="Logo" 
-              width={90} 
-              height={80} 
-              style={{ marginRight: '1px', height: 'auto' }} // Corregido para el warning
-              priority // Priorizar la carga del logo
-            />
-            <span style={{ color: 'gray', opacity: 0.6, filter: 'blur(1px)' }}>EddGlitch</span>
-          </a>
-        </div>
+        {/* Logo */}
+        <a href="#inicio" className="logo" onClick={closeMobileMenu}>
+          EddGlitch
+        </a>
 
-        {/* Navegación para Escritorio */}
+        {/* Enlaces de navegación para escritorio */}
         <ul className="nav-links">
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#sobre-mi">Sobre Mí</a></li>
           <li><a href="#proyectos">Proyectos</a></li>
           <li><a href="#intereses">Intereses</a></li>
-          <li><a href="#trayectoria-musical">Música</a></li>
+          <li><a href="#musica">Música</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
 
-        {/* Botón de Hamburguesa */}
-        <div 
-          className={`hamburger-menu ${isMenuOpen ? 'active' : ''}`} 
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
+        {/* Botón del menú hamburguesa */}
+        <button 
+          className={`hamburger-menu ${isMobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Menú de navegación"
+          aria-expanded={isMobileMenuOpen}
         >
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
-        </div>
-      </nav>
+        </button>
 
-      {/* Navegación para Móvil */}
-      <ul className={`mobile-nav ${isMenuOpen ? 'active' : ''}`}>
-        <li><a href="#inicio" onClick={handleLinkClick}>Inicio</a></li>
-        <li><a href="#sobre-mi" onClick={handleLinkClick}>Sobre Mí</a></li>
-        <li><a href="#proyectos" onClick={handleLinkClick}>Proyectos</a></li>
-        <li><a href="#intereses" onClick={handleLinkClick}>Intereses</a></li>
-        <li><a href="#trayectoria-musical" onClick={handleLinkClick}>Música</a></li>
-        <li><a href="#contacto" onClick={handleLinkClick}>Contacto</a></li>
-      </ul>
+        {/* Menú de navegación móvil */}
+        <ul className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+          <li><a href="#inicio" onClick={closeMobileMenu}>Inicio</a></li>
+          <li><a href="#sobre-mi" onClick={closeMobileMenu}>Sobre Mí</a></li>
+          <li><a href="#proyectos" onClick={closeMobileMenu}>Proyectos</a></li>
+          <li><a href="#intereses" onClick={closeMobileMenu}>Intereses</a></li>
+          <li><a href="#musica" onClick={closeMobileMenu}>Música</a></li>
+          <li><a href="#contacto" onClick={closeMobileMenu}>Contacto</a></li>
+        </ul>
+      </nav>
     </header>
   );
 };
 
 export default Header;
+
