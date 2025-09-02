@@ -1,0 +1,17 @@
+fix: Corrige error de compilación y mejora la responsividad
+
+- Se soluciona un error de sintaxis en el componente Hero que impedía la compilación.
+- Se ajusta la posición del botón "Ver Mi Trabajo" para centrarlo sobre el video de fondo.
+- Se mejora la responsividad general del sitio con ajustes en CSS y nuevas media queries para una mejor visualización en dispositivos móviles.
+- Se ajusta el grosor del scrollbar horizontal para que sea consistente con el vertical.
+- Se corrige el espaciado en la sección Hero para eliminar un gran hueco vacío.
+
+refactor: Refactoriza el componente ThemeToggle
+
+- Se reescribe por completo el componente para usar hooks de React (`useState`, `useEffect`) y seguir las mejores prácticas.
+- Se separa la lógica de cambio de tema, animación de seguimiento del ratón y parpadeo en `useEffect` manejables.
+- Se soluciona el bug que impedía el cambio de tema y la correcta ejecución de las animaciones.
+
+docs: Reestructura el README a un formato profesional
+
+- Se actualiza el `README.md` para que sirva como una guía completa para la instalación local y el despliegue del proyecto.

@@ -1,0 +1,58 @@
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import styles from './Header.module.css';
+interface HeaderProps {
+  isMenuOpen: boolean;
+  setIsMenuOpen: (isOpen: boolean) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen }) => {
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        setHeaderVisible(false);
+      } else {
+        setHeaderVisible(true);
+      }
+      setLastScrollTop(scrollTop);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollTop]);
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <header className={`${styles.header} glass-effect`} style={{ transform: headerVisible ? 'translateY(0)' : 'translateY(-100%)' }}>
+      <nav className={styles.nav}>
+        <div className={styles.logo}>
+          <Image src={`${basePath}/logeed.png`} alt="Logo" width={90} height={80} style={{ marginRight: '1px' }} />
+          <span style={{ color: 'gray', opacity: 0.6, filter: 'blur(1px)' }}>EddGlitch</span>
+        </div>
+        <button className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
+          <div className={styles.line1}></div>
+          <div className={styles.line2}></div>
+          <div className={styles.line3}></div>
+        </button>
+        <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
+          <li><a href="#inicio" onClick={handleLinkClick}>Inicio</a></li>
+          <li><a href="#sobre-mi" onClick={handleLinkClick}>Sobre Mí</a></li>
+          <li><a href="#proyectos" onClick={handleLinkClick}>Proyectos</a></li>
+          <li><a href="#intereses" onClick={handleLinkClick}>Intereses</a></li>
+          <li><a href="#trayectoria-musical" onClick={handleLinkClick}>Música</a></li>
+          <li><a href="#contacto" onClick={handleLinkClick}>Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;

@@ -1,0 +1,72 @@
+/* Estilos específicos para la sección Sobre Mí */
+.aboutSection {
+  position: relative;
+  overflow: hidden;
+}
+
+.aboutBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center right;
+  opacity: 0;
+  filter: blur(20px);
+  transform: scale(1.1);
+  z-index: -1;
+  transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.aboutBackground.visible {
+  opacity: 0.18;
+  filter: blur(2px);
+  transform: scale(1);
+}
+
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.aboutText p {
+  margin-bottom: 20px;
+  color: var(--color-text-secondary);
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.skillItem {
+  background: var(--color-bg-secondary);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.skillItem:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-accent-orange);
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.1);
+}
+
+/* Estilo especial para los items clickables */
+.clickableSkill {
+  cursor: pointer;
+}
+
+.clickableSkill:hover {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 10px 30px rgba(79, 195, 247, 0.2);
+  transform: translateY(-5px) scale(1.03);
+}
